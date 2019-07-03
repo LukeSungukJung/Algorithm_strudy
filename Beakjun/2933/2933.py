@@ -83,28 +83,29 @@ def collapse_mineral_dfs(mine,i,j,distance,visited_lst):
          if(mine[i][j+1]=='x'):
             collapse_mineral_dfs(mine,i,j+1,distance,visited_lst)   
             
-"""
+
 def exceed_distance(mine,i,j):
-    for btm in range(len(i)):
-        if(mine[btm][j]=='x'):
-            if(mine[btm+1]=='x'):
-                continue
-            return i-btm
-    
-            
-def get_dropped_distance(mine,visited_i_js):
-    first_line= [] 
-    for i_j in visited_i_js:
-    if(len(first_line)==0):
-        first_line.append(i_j)
+    for mi,ilst in enumerate(mine):
+        for mj,ele in enumerate(ilst):
+            if(ele=='o'):
+                return mi-i
+    modifiy here
+        
 
-    distance= min()
-            
-"""                
+def get_dropped_distance(mine):
+    collapse_lst= [] 
+    for i,ilst in enumerate(mine):
+        for j,ele in enumerate(ilst):
+            if(ele=='x'):
+                collapse_lst.append((i,j))
                 
-
-def collapse_chk(mmine):
-    duple_mine = mmine.copy()
+    distance= len(mine)
+    for ele in collapse_lst:
+        distance = min(distance,exceed_distance(mine,ele[0],ele[1]))
+    return distance
+    
+def collapse_chk(mine):
+    duple_mine = mine.copy()
     collapse_coeff = 0
     collapse_points =[]
     collapse=False
@@ -125,15 +126,15 @@ def collapse_chk(mmine):
                         duple_mine[btm_i][j]='o'
                         dfs_is_not_collapse(0,j,duple_mine)
                 collapse_coeff=collapse_coeff+1 
-                
-
+    distance =get_dropped_distance(mine)           
+    """
     if(collapse):
         first_i_j = collapse_points.pop()
-        distance = first_i_j[0]-0
         collapse_mineral_dfs(mine,first_i_j[0],first_i_j[1],distance, collapse_points)
         
         for ij_tuple in collapse_points:
-            mine[ij_tuple[0]-distance][ij_tuple[1]] = 'x'
+            mine[ij_tuple[0]+distance][ij_tuple[1]] = 'x'
+    """
     return mine
         
         
@@ -151,7 +152,7 @@ for i,atk in enumerate(attck_points):
     turn = i%2
     attck_mineral(atk,mine,turn)
     collapse_chk(mine)
-    recover_mine(mine)
+    #recover_mine(mine)
 mine.reverse()
 
 print(print_mine(mine))  
