@@ -89,7 +89,6 @@ def exceed_distance(mine,i,j):
         for mj,ele in enumerate(ilst):
             if(ele=='o'):
                 return mi-i
-    modifiy here
         
 
 def get_dropped_distance(mine):
@@ -126,7 +125,7 @@ def collapse_chk(mine):
                         duple_mine[btm_i][j]='o'
                         dfs_is_not_collapse(0,j,duple_mine)
                 collapse_coeff=collapse_coeff+1 
-    distance =get_dropped_distance(mine)           
+    #distance =get_dropped_distance(mine)           
     """
     if(collapse):
         first_i_j = collapse_points.pop()
