@@ -85,10 +85,13 @@ def collapse_mineral_dfs(mine,i,j,distance,visited_lst):
             
 
 def exceed_distance(mine,i,j):
+    min_dis = [i-0]
     for mi,ilst in enumerate(mine):
         for mj,ele in enumerate(ilst):
             if(ele=='o'):
-                return mi-i
+                min_dis.append(abs(mi-i)+1)
+    return min(min_dis)
+  #  modifiy here
         
 
 def get_dropped_distance(mine):
@@ -99,8 +102,10 @@ def get_dropped_distance(mine):
                 collapse_lst.append((i,j))
                 
     distance= len(mine)
-    for ele in collapse_lst:
-        distance = min(distance,exceed_distance(mine,ele[0],ele[1]))
+
+    if(len(collapse_lst)>0):
+        for ele in collapse_lst:
+           distance = min(distance,exceed_distance(mine,ele[0],ele[1]))
     return distance
     
 def collapse_chk(mine):
@@ -124,16 +129,16 @@ def collapse_chk(mine):
                 if(duple_mine[btm_i][j]=='x'):
                         duple_mine[btm_i][j]='o'
                         dfs_is_not_collapse(0,j,duple_mine)
-                collapse_coeff=collapse_coeff+1 
-    #distance =get_dropped_distance(mine)           
-    """
+                collapse_coeff=collapse_coeff+1  
+      
+    
     if(collapse):
+        distance =get_dropped_distance(mine)
         first_i_j = collapse_points.pop()
         collapse_mineral_dfs(mine,first_i_j[0],first_i_j[1],distance, collapse_points)
-        
         for ij_tuple in collapse_points:
-            mine[ij_tuple[0]+distance][ij_tuple[1]] = 'x'
-    """
+            mine[ij_tuple[0]-distance][ij_tuple[1]] = 'x'
+    recover_mine(mine)
     return mine
         
         
