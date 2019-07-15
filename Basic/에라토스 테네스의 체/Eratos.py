@@ -33,6 +33,8 @@ for num in (clone_list):
         continue
 
 def print_eratos(lst):
+    if(1 in lst):
+        lst.remove(1)
     sstr =""
     for idx,ele in enumerate(lst):
         idx=idx+1
@@ -40,5 +42,4 @@ def print_eratos(lst):
         if(idx%5==0):
             sstr= sstr+"\n"
     print(sstr)
-
 print_eratos(num_list)
