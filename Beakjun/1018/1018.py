@@ -33,10 +33,8 @@ def custom_slice_lst(gmap,xycut,start_x=0,start_y=0):
 
 
 def reverse_spot(gmap,xymax,ix,iy,count):
-    print(ix,",",iy)
     if(ix ==xymax-1 and iy==xymax-1):
         return count
-    
     xmax=xymax
     ymax=xymax
     now = gmap[ix][iy]
@@ -45,6 +43,7 @@ def reverse_spot(gmap,xymax,ix,iy,count):
         ano='W'
     else:
         ano='B'
+        
     if(iy-1>=0 and gmap[ix][iy-1]==now):
         gmap[ix][iy-1]=ano
         count=count+1
@@ -53,20 +52,20 @@ def reverse_spot(gmap,xymax,ix,iy,count):
         gmap[ix][iy+1]=ano
         count=count+1
         count =reverse_spot(gmap,xymax,ix,iy+1,count)
-    if(iy+1<=ymax-1 and gmap[ix][iy+1]!=now and gmap[ix][iy-1]!=now):
+    elif(iy+1<=ymax-1):
         count =reverse_spot(gmap,xymax,ix,iy+1,count)
             
-    
-    if(ix+1<=xmax-1and gmap[ix+1][iy]==now):
-        gmap[ix+1][iy]=ano
-        count=count+1
-        count =reverse_spot(gmap,xymax,ix+1,iy,count)
+        
     if(ix-1>=0 and gmap[ix-1][iy]==now):
         gmap[ix-1][iy]=ano
         count=count+1
-        count =reverse_spot(gmap,xymax,ix-1,iy,count)
-    if(ix+1<=xmax-1 and gmap[ix-1][iy]!=now and gmap[ix+1][iy]!=now):
+        count =reverse_spot(gmap,xymax,ix-1,iy,count)    
+    if(ix+1<=xmax-1 and gmap[ix+1][iy]==now):
+        gmap[ix+1][iy]=ano
+        count=count+1
         count =reverse_spot(gmap,xymax,ix+1,iy,count)
+    elif(ix+1<=xmax-1):
+        count =reverse_spot(gmap,xymax,ix+1,iy,count)    
     return count
 
 count_list= []
@@ -80,25 +79,7 @@ def get_count_lst(gmap):
         for iy in range(y_lst_len):
             tmp_count=0
             sliced_gmap = custom_slice_lst(gmap,x_y_grap_size,ix,iy)
-            for six in range(1,len(sliced_gmap)-1):
-                for siy in range(len(sliced_gmap[0])):
-                    tmp_count = tmp_count+ reverse_spot(gmap,x_y_grap_size,x_y_grap_size,six,siy,tmp_count) 
+            tmp_count = reverse_spot(sliced_gmap,x_y_grap_size,0,0,0) 
             count_list.append(tmp_count)
 get_count_lst(g_map)
-print(count_list)
-    
-    
-
-def get_count_lst2(gmap):
-    x_y_grap_size = 4
-    x_lst_len = len(gmap)-x_y_grap_size+1
-    y_lst_len = len(gmap[0])-x_y_grap_size+1
-    for ix in range(x_lst_len):
-        for iy in range(y_lst_len):
-            tmp_count=0
-            sliced_gmap = custom_slice_lst(gmap,x_y_grap_size,ix,iy)
-            for six in range(1,len(sliced_gmap)-1):
-                for siy in range(len(sliced_gmap[0])):
-                    reverse_spot(sliced_gmap,x_y_grap_size,six,siy,tmp_count)
-    #print("x",x_lst_len)
-    #print("y",y_lst_len)
+print(min(count_list))
