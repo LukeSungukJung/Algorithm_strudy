@@ -49,6 +49,7 @@ def custom_slice_lst(gmap,xycut,start_x=0,start_y=0):
 count_list= []
 
 def compare_maps(sliced_gmap):
+    tmp_count=0
     if(BW_board==sliced_gmap or WB_board == sliced_gmap):
         count_list.append(tmp_count)
     else:
@@ -76,7 +77,6 @@ def get_count_lst(gmap):
     
     for ix in range(x_lst_len):
         for iy in range(y_lst_len):
-            tmp_count=0
             sliced_gmap = custom_slice_lst(gmap,x_y_grap_size,ix,iy)
             compare_maps(sliced_gmap)
     
