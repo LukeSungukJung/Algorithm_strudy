@@ -83,3 +83,5 @@ def get_count_lst(gmap):
             count_list.append(tmp_count)
 get_count_lst(g_map)
 print(min(count_list))
+    
+    
