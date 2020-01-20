@@ -2,27 +2,27 @@ num = input()
 input_list = []
 
 for one in range(int(num)):
-    input_list.append(int(input()))
-input_index_list = [False]*int(num) 
+
+    new_oneint=int(input())
+    if(len(input_list)>=1):
+        for list_index,ip_one in enumerate(input_list):
+            if(new_oneint<ip_one):
+                input_list.insert(list_index,new_oneint)
+                break;
+        input_list.append(new_oneint)
+    else:
+        input_list.append(new_oneint)
+        
+                
+                
+                
+        
 now_index=0
 roop_index=0
 
-while False in input_index_list:
-    if(now_index<int(num)-1):
-        if(input_list[now_index]>input_list[now_index+1]):
-            temp = input_list[now_index]
-            input_list[now_index] = input_list[now_index+1]
-            input_list[now_index+1] =temp
-            now_index+=1
-        else:
-            input_index_list[now_index]=True
-            if(False not in input_index_list):
-                break
-            else:
-                now_index = input_index_list.index(False)
-    else:
-        input_index_list[now_index]=True
-        now_index = input_index_list.index(False)
         
 for i in input_list:
     print(i)
+
+
+#input_list.sort()
